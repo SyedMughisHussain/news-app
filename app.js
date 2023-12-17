@@ -95,7 +95,7 @@ async function technologyDataNews() {
 
 async function entertainmentDataNews() {
   try {
-    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=in&category=general&apiKey=3a02b8c644bd4df29d5e607607d4105a`);
+    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=in&category=entertainment&apiKey=3a02b8c644bd4df29d5e607607d4105a`);
     newDataArray = [];
     const news = await response.json();
     const newsData = await news.articles;

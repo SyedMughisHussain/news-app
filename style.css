@@ -2,3 +2,12 @@
     margin: 0%;
     padding: 0%;
 }
+.grid-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 10px;
+}
+
+/* .card{
+    display: grid;
+} */

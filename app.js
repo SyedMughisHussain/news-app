@@ -1,14 +1,19 @@
 const newsBlock = document.querySelector(".news");
 const newsType = document.querySelector(".newsType");
-const generalNews = document.querySelector('.general');
-const businessNews = document.querySelector('.business');
-const sportsNews = document.querySelector('.sports');
-const technologyNews = document.querySelector('.technology');
-const entertainmentNews = document.querySelector('.entertainment');
+const newsButton = document.querySelector(".newsButton");
+const generalNews = document.querySelector(".general");
+const businessNews = document.querySelector(".business");
+const sportsNews = document.querySelector(".sports");
+const technologyNews = document.querySelector(".technology");
+const entertainmentNews = document.querySelector(".entertainment");
+
+const inputText = document.querySelector(".input-data");
+const search_btn = document.querySelector(".search-btn");
 
 let newDataArray = [];
 
-const onloadApiUrl = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=3a02b8c644bd4df29d5e607607d4105a';
+const onloadApiUrl =
+  "https://newsapi.org/v2/top-headlines?country=us&apiKey=3a02b8c644bd4df29d5e607607d4105a";
 
 function renderNews() {
   newsBlock.innerHTML = "";
@@ -27,6 +32,28 @@ function renderNews() {
   });
 }
 
+search_btn.addEventListener("click", async () => {
+  try {
+    if (inputText.value !== "") {
+      const response = await fetch(
+        `https://newsapi.org/v2/everything?q=${inputText.value}&apiKey=3a02b8c644bd4df29d5e607607d4105a`
+      );
+      newDataArray = [];
+      const data = await response.json();
+      const dataNews = data.articles;
+      newDataArray.push(dataNews);
+      const value = inputText.value;
+      newsType.textContent = value.toUpperCase();
+      inputText.value = "";
+      renderNews();
+    } else {
+      alert("Enter the right value.");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 async function newsApi() {
   try {
     const response = await fetch(onloadApiUrl);
@@ -43,7 +70,9 @@ window.onload = newsApi();
 
 async function generalDataNews() {
   try {
-    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=in&category=general&apiKey=3a02b8c644bd4df29d5e607607d4105a`);
+    const response = await fetch(
+      `https://newsapi.org/v2/top-headlines?country=in&category=general&apiKey=3a02b8c644bd4df29d5e607607d4105a`
+    );
     newDataArray = [];
     const news = await response.json();
     const newsData = await news.articles;
@@ -56,7 +85,9 @@ async function generalDataNews() {
 
 async function businessDataNews() {
   try {
-    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=3a02b8c644bd4df29d5e607607d4105a`);
+    const response = await fetch(
+      `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=3a02b8c644bd4df29d5e607607d4105a`
+    );
     newDataArray = [];
     const news = await response.json();
     const newsData = await news.articles;
@@ -69,7 +100,9 @@ async function businessDataNews() {
 
 async function sportsDataNews() {
   try {
-    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=3a02b8c644bd4df29d5e607607d4105a`);
+    const response = await fetch(
+      `https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=3a02b8c644bd4df29d5e607607d4105a`
+    );
     newDataArray = [];
     const news = await response.json();
     const newsData = await news.articles;
@@ -82,7 +115,9 @@ async function sportsDataNews() {
 
 async function technologyDataNews() {
   try {
-    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=3a02b8c644bd4df29d5e607607d4105a`);
+    const response = await fetch(
+      `https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=3a02b8c644bd4df29d5e607607d4105a`
+    );
     newDataArray = [];
     const news = await response.json();
     const newsData = await news.articles;
@@ -95,7 +130,9 @@ async function technologyDataNews() {
 
 async function entertainmentDataNews() {
   try {
-    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=in&category=entertainment&apiKey=3a02b8c644bd4df29d5e607607d4105a`);
+    const response = await fetch(
+      `https://newsapi.org/v2/top-headlines?country=in&category=entertainment&apiKey=3a02b8c644bd4df29d5e607607d4105a`
+    );
     newDataArray = [];
     const news = await response.json();
     const newsData = await news.articles;
@@ -106,27 +143,31 @@ async function entertainmentDataNews() {
   }
 }
 
-generalNews.addEventListener('click', () => {
-  newsType.textContent = 'General';
+newsButton.addEventListener("click", () => {
+  newsApi();
+});
+
+generalNews.addEventListener("click", () => {
+  newsType.textContent = "General";
   generalDataNews();
 });
 
-businessNews.addEventListener('click', () => {
-  newsType.textContent = 'Business';
+businessNews.addEventListener("click", () => {
+  newsType.textContent = "Business";
   businessDataNews();
 });
 
-sportsNews.addEventListener('click', () => {
-  newsType.textContent = 'Sports';
+sportsNews.addEventListener("click", () => {
+  newsType.textContent = "Sports";
   sportsDataNews();
 });
 
-technologyNews.addEventListener('click', () => {
-  newsType.textContent = 'Technologies';
+technologyNews.addEventListener("click", () => {
+  newsType.textContent = "Technologies";
   technologyDataNews();
 });
 
-entertainmentNews.addEventListener('click', () => {
-  newsType.textContent = 'Entertainment';
+entertainmentNews.addEventListener("click", () => {
+  newsType.textContent = "Entertainment";
   entertainmentDataNews();
 });
